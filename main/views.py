@@ -19,12 +19,12 @@ def get_panoramio_pics(request):
     panoramio_url = "http://www.panoramio.com/map/get_panoramas.php?set=public&from=%i&to=%i&minx=%s&miny=%s&maxx=%s&maxy=%s&size=medium"
     #panoramio_url = panoramio_url % (first, last,  -74.9, 10.8,  -74.6, 11.0)
     panoramio_url = panoramio_url % (first, last,  minx, miny, maxx, maxy)
-    print panoramio_url
+    #print panoramio_url
     req = urllib2.Request(panoramio_url)
     opener = urllib2.build_opener()
     f = opener.open(req)
     json = simplejson.load(f)
-    print json
+    #print json
     photos = json.get('photos')
     response = ''
     for p in photos:
@@ -37,17 +37,17 @@ def twitt(request):
     import pprint
     twitter = OAuthApi(settings.TWITTER_CONSUMER_KEY, settings.TWITTER_CONSUMER_SECRET_KEY)
     temp_credentials = twitter.getRequestToken()
-    print twitter.getAuthorizationURL(temp_credentials)
+    #print twitter.getAuthorizationURL(temp_credentials)
     access_token = twitter.getAccessToken(temp_credentials, "wmDcSUb2pEAWqrcIPZYthmGXDhKRLbnrXibhpMIp8")
-    print access_token
+    #print access_token
 
-    print "oauth_token: " + access_token['oauth_token']
-    print "oauth_token_secret: " + access_token['oauth_token_secret']
+    #print "oauth_token: " + access_token['oauth_token']
+    #print "oauth_token_secret: " + access_token['oauth_token_secret']
     twitter = OAuthApi(settings.TWITTER_CONSUMER_KEY, settings.TWITTER_CONSUMER_SECRET_KEY, access_token['oauth_token'], access_token['oauth_token_secret'])
     user_timeline = twitter.GetUserTimeline()
 
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(user_timeline)
+    #pp = pprint.PrettyPrinter(indent=4)
+    #pp.pprint(user_timeline)
 
 
     import twitter
