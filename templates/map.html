@@ -64,10 +64,10 @@
     </form>
 
     {% if user.is_authenticated %}
-        {{ user }} <a href="{% url social_logout %}">logout</a>
+        {{ user }} <a href="{# url social_logout #}">logout</a>
     {% else %}
-        {% load twitter_tags %}
-        {% twitter_button %}
+        {# load twitter_tags #}
+        {# twitter_button #}
     {% endif %}
 
     <div>
