@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps V3 API Sample</title>
+    <style>
+        div#bounds{background: yellow; overflow: hidden; width: 500px}
+        div#bounds div{padding: 10px; float: left; width: 220px; text-align: center}
+        div#bounds div input{width: 100%}
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+
+      function initialize() {
+        var mapDiv = document.getElementById('map-canvas');
+        var map = new google.maps.Map(mapDiv, {
+          center: new google.maps.LatLng(10.971212589974154, -74.79134076538087),
+          zoom: 10,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        google.maps.event.addListener(map, 'click', function() {
+            
+        });
+        google.maps.event.addListener(map, 'dragend', function() {
+            set_bounds(map.getBounds());
+        });
+        google.maps.event.addListener(map, 'zoom_changed', function() {
+            set_bounds(map.getBounds());
+        });
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+      function set_bounds(bounds){
+          var NE = bounds.getNorthEast();
+          var SO = bounds.getSouthWest();
+          $("#maxy").val(NE.lat());
+          $("#maxx").val(NE.lng());
+          $("#miny").val(SO.lat());
+          $("#minx").val(SO.lng());
+      }
+    </script>
+  </head>
+  <body style="font-family: Arial; border: 0 none;">
+    <div id="map-canvas" style="width: 500px; height: 400px"></div>
+
+    <form action="{% url get_panoramio_pics %}" method="get">
+        <div id="bounds">
+            <div>
+                min x<input type="text" id="minx" name="minx"></input>
+            </div>
+            <div>
+                min y<input type="text" id="miny" name="miny"></input>
+            </div>
+            <div>
+                max x<input type="text" id="maxx" name="maxx"></input>
+            </div>
+            <div>
+                max y<input type="text" id="maxy" name="maxy"></input>
+            </div>
+            <input type="submit" name="go!" />
+        </div>
+    </form>
+
+    {% if user.is_authenticated %}
+        {{ user }} <a href="{% url social_logout %}">logout</a>
+    {% else %}
+        {% load twitter_tags %}
+        {% twitter_button %}
+    {% endif %}
+
+    <div>
+        <a href="{% url twitt %}">twitte</a>
+    </div>
+    
+
+  </body>
+</html>
