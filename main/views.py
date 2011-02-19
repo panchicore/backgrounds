@@ -11,12 +11,12 @@ def map(request):
 
 def get_panoramio_pics(request):
     first = 0
-    last = 50
+    last = 200
     minx = request.GET.get('minx')
     miny = request.GET.get('miny')
     maxx = request.GET.get('maxx')
     maxy = request.GET.get('maxy')
-    panoramio_url = "http://www.panoramio.com/map/get_panoramas.php?set=public&from=%i&to=%i&minx=%s&miny=%s&maxx=%s&maxy=%s&size=medium"
+    panoramio_url = "http://www.panoramio.com/map/get_panoramas.php?set=public&from=%i&to=%i&minx=%s&miny=%s&maxx=%s&maxy=%s&size=square"
     #panoramio_url = panoramio_url % (first, last,  -74.9, 10.8,  -74.6, 11.0)
     panoramio_url = panoramio_url % (first, last,  minx, miny, maxx, maxy)
     #print panoramio_url
