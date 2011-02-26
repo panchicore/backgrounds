@@ -45,7 +45,7 @@
   <body style="font-family: Arial; border: 0 none;">
     <div id="map-canvas" style="width: 500px; height: 400px"></div>
 
-    <form action="{% url get_panoramio_pics %}" method="get">
+    <form action="{% url save_bounds %}" method="post">
         <div id="bounds">
             <div>
                 min x<input type="text" id="minx" name="minx"></input>

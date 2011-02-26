@@ -67,6 +67,7 @@ LOGIN_REDIRECT_URL = '/map/'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'csrf.DisableCsrfMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -92,9 +93,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'main',
     #'socialregistration',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -107,3 +109,5 @@ TWITTER_ACCESS_TOKEN_URL = 'http://twitter.com/oauth/access_token'
 TWITTER_AUTHORIZATION_URL = 'http://twitter.com/oauth/authorize'
 
 SOCIALREGISTRATION_GENERATE_USERNAME = True
+
+from local_settings import *

@@ -1,0 +1,9 @@
+root { 
+    display: block;
+}
+body{
+    margin: 0
+}
+
+div#content{width: 800px; overflow: hidden}
+div#content div{float: left}

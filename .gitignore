@@ -3,6 +3,7 @@
 *.egg-info
 build
 target
+*.db
 
 # OSX specific
 .Python
@@ -16,4 +17,4 @@ pip-log.txt
 
 # Django Specific
 local_settings.py
-ariel.json
+

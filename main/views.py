@@ -1,24 +1,39 @@
+from django.http import HttpResponseRedirect
 from django.template.context import RequestContext
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 import simplejson
 import urllib2
 from django.conf import settings
+from main.models import Bound
 # Create your views here.
 
 def map(request):
     return render_to_response('map.html', {}, context_instance=RequestContext(request))
 
-def get_panoramio_pics(request):
+def save_bounds(request):
+    minx = request.POST.get('minx')
+    miny = request.POST.get('miny')
+    maxx = request.POST.get('maxx')
+    maxy = request.POST.get('maxy')
+    bounds = Bound()
+    bounds.min_x = minx
+    bounds.min_y = miny
+    bounds.max_x = maxx
+    bounds.max_y = maxy
+    bounds.save()
+    return HttpResponseRedirect(reverse('get_bounds', args=[bounds.id]))
+
+
+def get_bounds(request, bounds_id):
+
+    bounds = Bound.objects.get(id=bounds_id)
+
     first = 0
-    last = 200
-    minx = request.GET.get('minx')
-    miny = request.GET.get('miny')
-    maxx = request.GET.get('maxx')
-    maxy = request.GET.get('maxy')
+    last = 169
     panoramio_url = "http://www.panoramio.com/map/get_panoramas.php?set=public&from=%i&to=%i&minx=%s&miny=%s&maxx=%s&maxy=%s&size=square"
-    #panoramio_url = panoramio_url % (first, last,  -74.9, 10.8,  -74.6, 11.0)
-    panoramio_url = panoramio_url % (first, last,  minx, miny, maxx, maxy)
+    panoramio_url = panoramio_url % (first, last,  bounds.min_x, bounds.min_y, bounds.max_x, bounds.max_y)
     #print panoramio_url
     req = urllib2.Request(panoramio_url)
     opener = urllib2.build_opener()
@@ -26,11 +41,11 @@ def get_panoramio_pics(request):
     json = simplejson.load(f)
     #print json
     photos = json.get('photos')
-    response = ''
+    response = []
     for p in photos:
-        tag = '<img src="%s" title="%s">' % ( p.get('photo_file_url'),p.get('photo_title'))
-        response = response + tag
-    return HttpResponse(response)
+        item = {"photo_url":p.get('photo_file_url')}
+        response.append(item)
+    return render_to_response('get_bounds.html',{'response':response},context_instance=RequestContext(request))
 
 def twitt(request):
     from oauthtwitter import OAuthApi
