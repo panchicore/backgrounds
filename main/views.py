@@ -31,7 +31,7 @@ def get_bounds(request, bounds_id):
     bounds = Bound.objects.get(id=bounds_id)
 
     first = 0
-    last = 169
+    last = 192
     panoramio_url = "http://www.panoramio.com/map/get_panoramas.php?set=public&from=%i&to=%i&minx=%s&miny=%s&maxx=%s&maxy=%s&size=square"
     panoramio_url = panoramio_url % (first, last,  bounds.min_x, bounds.min_y, bounds.max_x, bounds.max_y)
     #print panoramio_url

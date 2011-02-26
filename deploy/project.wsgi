@@ -2,7 +2,7 @@ import os, sys
 from os.path import abspath, dirname, join
 
 import site
-site.addsitedir('/home/<user>/.venvs/<backgrounds>/lib/python2.6/site-packages')
+site.addsitedir('/home/ubuntu/.venvs/backgrounds/lib/python2.6/site-packages')
 
 
 sys.path.insert(0, abspath(join(dirname(__file__), "..", "..")))
