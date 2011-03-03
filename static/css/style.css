@@ -6,4 +6,7 @@ body{
 }
 
 div#content{width: 1000px; overflow: hidden}
-div#content div{float: left}
+div#content div{float: left; width: 60px; height: 60px}
+/*div#content div.a{background-color: rgba(255, 0, 255, 0.5); color: rgba(255, 0, 255, 0.5); }
+div#content div.b{background-color: rgba(0, 255, 0, 0.5); color: rgba(3, 3, 3, 0.5); }*/
+div#content div img{position: absolute; z-index: -1}
