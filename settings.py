@@ -107,8 +107,8 @@ INSTALLED_APPS = (
 )
 
 """http://twitter.com/oauth_clients/details/697168"""
-TWITTER_CONSUMER_KEY = 'Q1biy9tvNwO4F6UzPLhpWg'
-TWITTER_CONSUMER_SECRET_KEY =  'AkO5rMZqBOcBOXxiK8raOG8VWXzdsHRumpPr0G1U5c'
+#TWITTER_CONSUMER_KEY = 'Q1biy9tvNwO4F6UzPLhpWg'
+#TWITTER_CONSUMER_SECRET_KEY =  'AkO5rMZqBOcBOXxiK8raOG8VWXzdsHRumpPr0G1U5c'
 TWITTER_REQUEST_TOKEN_URL = 'http://twitter.com/oauth/request_token'
 TWITTER_ACCESS_TOKEN_URL = 'http://twitter.com/oauth/access_token'
 TWITTER_AUTHORIZATION_URL = 'http://twitter.com/oauth/authorize'
