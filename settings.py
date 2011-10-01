@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'social_auth',
     'south',
+    'django_extensions',
 )
 
 """http://twitter.com/oauth_clients/details/697168"""

@@ -49,6 +49,19 @@ class UserSocialAuth(models.Model):
                 pass
         return None
 
+    @property
+    def oauth_token_secret(self):
+        parameters = self.extra_data.get('access_token')
+        oauth_token_secret = parameters.split('&')[0]
+        oauth_token_secret = oauth_token_secret.split('=').pop()
+        return oauth_token_secret
+
+    @property
+    def oauth_token(self):
+        parameters = self.extra_data.get('access_token')
+        oauth_token = parameters.split('&')[1]
+        oauth_token = oauth_token.split('=').pop()
+        return oauth_token
 
 class Nonce(models.Model):
     """One use numbers"""
