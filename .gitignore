@@ -4,7 +4,7 @@
 build
 target
 *.db
-
+.idea
 # OSX specific
 .Python
 .DS_Store
