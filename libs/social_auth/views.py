@@ -101,6 +101,10 @@ def auth(request, backend):
     """Start authentication process"""
     return auth_process(request, backend)
 
+def logout(request):
+    from django.contrib.auth import logout as django_logout
+    django_logout(request)
+    return HttpResponseRedirect('/')
 
 @csrf_exempt
 @dsa_view()

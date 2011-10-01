@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     url(r'^save/$', 'main.views.save_bounds', name='save_bounds'),
     url(r'^get/(?P<bounds_id>\d+)/$', 'main.views.get_bounds', name='get_bounds'),
-    url(r'^$', 'main.views.map', name='map'),
     url(r'', include('social_auth.urls')),
+    url(r'^$', 'main.views.map', name='map'),
+
 )

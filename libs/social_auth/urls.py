@@ -2,11 +2,12 @@
 from django.conf.urls.defaults import patterns, url
 
 from social_auth.views import auth, complete, associate, associate_complete, \
-                              disconnect
+                              disconnect, logout
 
 
 urlpatterns = patterns('',
     url(r'^login/(?P<backend>[^/]+)/$', auth, name='socialauth_begin'),
+    url(r'^logout/$', logout, name='logout'),
     url(r'^complete/(?P<backend>[^/]+)/$', complete, name='socialauth_complete'),
     url(r'^associate/(?P<backend>[^/]+)/$', associate, name='socialauth_associate_begin'),
     url(r'^associate/complete/(?P<backend>[^/]+)/$', associate_complete,

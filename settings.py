@@ -62,7 +62,7 @@ AUTHENTICATION_BACKENDS = (
     'socialregistration.auth.TwitterAuth',
 )
 
-LOGIN_REDIRECT_URL = '/map/'
+LOGIN_REDIRECT_URL = '/'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
