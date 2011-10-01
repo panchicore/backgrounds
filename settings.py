@@ -78,7 +78,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
-    'django.contrib.messages.context_processors.messages'
+    'django.contrib.messages.context_processors.messages',
+    'social_auth.context_processors.social_auth_by_type_backends',
 )
 
 ROOT_URLCONF = 'backgrounds.urls'
@@ -100,6 +101,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'social_auth',
+    'south',
 )
 
 """http://twitter.com/oauth_clients/details/697168"""
@@ -110,5 +113,13 @@ TWITTER_ACCESS_TOKEN_URL = 'http://twitter.com/oauth/access_token'
 TWITTER_AUTHORIZATION_URL = 'http://twitter.com/oauth/authorize'
 
 SOCIALREGISTRATION_GENERATE_USERNAME = True
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+TWITTER_CONSUMER_KEY         = 'ZjQ9ATIoZHE5aR7OlFPUQ'
+TWITTER_CONSUMER_SECRET      = 'LUyYHBg0zEctwWOpQMUpwDUSvTNxEjNP7oW1xYO3oaY'
 
 from local_settings import *
