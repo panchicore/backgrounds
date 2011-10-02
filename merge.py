@@ -1,3 +1,4 @@
+"""
 import Image
 import simplejson
 import urllib2, urllib
@@ -71,3 +72,4 @@ negro = Image.open('negro.jpg')
 blank_image.save('ok3.jpg', quality=100)
 image = Image.blend(blank_image, negro, 0.5)
 image.save('ok3_x.jpg', quality = 100)
+"""
