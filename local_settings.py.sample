@@ -10,3 +10,11 @@ DATABASES = {
 }
 
 MEDIA_URL = 'http://localhost:8000/static/'
+
+BROKER_BACKEND="redis"
+BROKER_HOST = "localhost"
+BROKER_PORT = 6379
+BROKER_USER = ""
+BROKER_PASSWORD = ""
+BROKER_VHOST = "0"
+CELERY_SEND_EVENTS = True

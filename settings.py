@@ -104,7 +104,12 @@ INSTALLED_APPS = (
     'social_auth',
     'south',
     'django_extensions',
+    'djcelery',
 )
+
+import djcelery
+djcelery.setup_loader()
+#CELERY_IMPORTS = ("myapp.tasks", )
 
 """http://twitter.com/oauth_clients/details/697168"""
 #TWITTER_CONSUMER_KEY = 'Q1biy9tvNwO4F6UzPLhpWg'

@@ -8,3 +8,6 @@ django_extensions
 django-debug-toolbar
 easy-thumbnails
 django-widget-tweaks
+PIL
+django-celery==2.3.3
+redis
