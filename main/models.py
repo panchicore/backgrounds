@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django_extensions.db.fields import CreationDateTimeField, ModificationDateTimeField
+from django_extensions.db.fields import CreationDateTimeField, ModificationDateTimeField, UUIDField
 from utils import get_json, download_image
 import Image, os
 from django.conf import settings
 
 class Bound(models.Model):
+    uuid = UUIDField()
     user = models.ForeignKey(User, related_name='bounds')
 
     min_x = models.FloatField()
@@ -83,7 +84,7 @@ class Bound(models.Model):
         image = Image.blend(blank_image, negro, 0.5)
         image.save( os.path.join(statics_path, 'backgrounds', '%i_black.jpg' % self.id) , quality = 100)
         image = Image.open(os.path.join(statics_path, 'backgrounds', '%i_black.jpg' % self.id))
-        self.image = image.filename
+        self.image = image.filename.split('static/').pop()
 
         self.save()
 

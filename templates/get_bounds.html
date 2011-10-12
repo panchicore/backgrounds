@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
+{% block css_background %}
+    {% if bounds %}
+        {% if bounds.image %}
+            background: url({{ MEDIA_URL }}{{ bounds.image }});
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-    {{ bounds }}
+
+    <form action="{% url set_background %}" method="post">
+        <input type="hidden" name="uuid" value="{{ bounds.uuid }}">
+        <input type="submit" value="set me this background on my twitter page">
+    </form>
+
 {% endblock %}

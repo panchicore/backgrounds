@@ -22,6 +22,7 @@
             /* Override some defaults */
         html, body {
             background-color: #eee;
+            {% block css_background %}{% endblock %}
         }
 
         body {
@@ -159,9 +160,6 @@
         </div>
     </div>
 
-    <footer>
-        <p>&copy; Company 2011</p>
-    </footer>
 
 </div> <!-- /container -->
 

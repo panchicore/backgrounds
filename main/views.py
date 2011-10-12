@@ -1,8 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.template.context import RequestContext
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django_extensions.db.fields import UUIDField
 import simplejson
 import urllib2
 from django.conf import settings
@@ -26,13 +27,14 @@ def save_bounds(request):
     bounds.max_y = maxy
     bounds.user = request.user
     bounds.save()
-    return HttpResponseRedirect(reverse('get_bounds', args=[bounds.id]))
+    return HttpResponseRedirect(reverse('get_bounds', args=[bounds.uuid]))
 
 
-def get_bounds(request, bounds_id):
+def get_bounds(request, bounds_uuid):
+    bounds = Bound.objects.get(uuid=bounds_uuid)
+    return render_to_response('get_bounds.html',{'bounds':bounds},context_instance=RequestContext(request))
 
-    bounds = Bound.objects.get(id=bounds_id)
-
-    return render_to_response('get_bounds.html',{
-        'bounds':bounds,
-    },context_instance=RequestContext(request))
+def set_background(request):
+    if request.method == 'POST':
+        return HttpResponse('OK')
+    return Http404

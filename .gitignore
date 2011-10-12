@@ -19,4 +19,5 @@ pip-log.txt
 local_settings.py
 
 #statics
-
+downloads/
+static/backgrounds
