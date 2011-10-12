@@ -18,3 +18,5 @@ pip-log.txt
 # Django Specific
 local_settings.py
 
+#statics
+

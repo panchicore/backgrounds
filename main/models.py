@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_extensions.db.fields import CreationDateTimeField, ModificationDateTimeField
 from utils import get_json, download_image
-import Image
+import Image, os
+from django.conf import settings
 
 class Bound(models.Model):
     user = models.ForeignKey(User, related_name='bounds')
@@ -12,9 +13,9 @@ class Bound(models.Model):
     max_x = models.FloatField()
     max_y = models.FloatField()
 
-    image = models.ImageField(upload_to='backgrounds', null=True, blank=True)
+    image = models.ImageField(upload_to='static/backgrounds', null=True, blank=True)
 
-    installed = models.BooleanField()
+    installed = models.BooleanField(default=False)
 
     created = CreationDateTimeField()
     modified = ModificationDateTimeField()
@@ -42,41 +43,49 @@ class Bound(models.Model):
             url = p.get('photo_file_url')
             name = url.split('/').pop()
             print 'downloading %s ...' % name
-            download_image(url, name)
+            download_image(url, self.id, name)
             image_list.append(name)
             print 'total: %i' % len(image_list)
 
 
-    grid = 10
-    sizex = 60
-    sizey = 60
-    xy = (sizex * grid, sizey * grid)
+        grid = 10
+        sizex = 60
+        sizey = 60
+        xy = (sizex * grid, sizey * grid)
 
-    blank_image = Image.new("RGB", xy)
+        blank_image = Image.new("RGB", xy)
 
-    ycar = 0
-    xcar = 0
-    y = 0
-    x = 0
+        ycar = 0
+        xcar = 0
+        y = 0
+        x = 0
 
-    for i in range(0, (grid*grid)):
+        statics_path = settings.MEDIA_ROOT
+        downloads_path = os.path.join(settings.DOWNLOAD_IMAGE_PATH, str(self.id))
 
-        if i % grid == 0:
-            y = ycar * sizey
-            ycar = ycar + 1
-            xcar = 0
-        else:
-            xcar = xcar + 1
+        for i in range(0, (grid*grid)):
 
-        x = sizex * xcar
+            if i % grid == 0:
+                y = ycar * sizey
+                ycar = ycar + 1
+                xcar = 0
+            else:
+                xcar = xcar + 1
 
-        img = Image.open('pics3/%s' % image_list[i])
-        blank_image.paste(img, (x,y))
+            x = sizex * xcar
 
-    negro = Image.open('negro.jpg')
-    blank_image.save('ok3.jpg', quality=100)
-    image = Image.blend(blank_image, negro, 0.5)
-    image.save('ok3_x.jpg', quality = 100)
+            img = Image.open( os.path.join(downloads_path, image_list[i]) )
+            blank_image.paste(img, (x,y))
+
+
+        negro = Image.open( os.path.join(statics_path, 'negro.jpg') )
+        blank_image.save( os.path.join(statics_path, 'backgrounds', '%i.jpg' % self.id) , quality=100)
+        image = Image.blend(blank_image, negro, 0.5)
+        image.save( os.path.join(statics_path, 'backgrounds', '%i_black.jpg' % self.id) , quality = 100)
+        image = Image.open(os.path.join(statics_path, 'backgrounds', '%i_black.jpg' % self.id))
+        self.image = image.filename
+
+        self.save()
 
 
     

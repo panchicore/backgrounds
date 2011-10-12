@@ -128,4 +128,7 @@ AUTHENTICATION_BACKENDS = (
 TWITTER_CONSUMER_KEY         = 'ZjQ9ATIoZHE5aR7OlFPUQ'
 TWITTER_CONSUMER_SECRET      = 'LUyYHBg0zEctwWOpQMUpwDUSvTNxEjNP7oW1xYO3oaY'
 
+DOWNLOAD_IMAGE_PATH = os.path.join(PROJECT_DIR, "downloads").replace('\\','/')
+
+
 from local_settings import *
