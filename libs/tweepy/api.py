@@ -714,21 +714,25 @@ class API(object):
         # build the mulitpart-formdata body
         fp = open(filename, 'rb')
         BOUNDARY = 'Tw3ePy'
+        import base64
         body = []
         body.append('--' + BOUNDARY)
         body.append('Content-Disposition: form-data; name="image"; filename="%s"' % filename)
         body.append('Content-Type: %s' % file_type)
         body.append('')
-        body.append(fp.read())
+        #body.append( base64.b64encode( fp.read() ))
+        body.append( fp.read() )
         body.append('--' + BOUNDARY + '--')
         body.append('')
         fp.close()
+        print body
+        
         body = '\r\n'.join(body)
 
         # build headers
         headers = {
             'Content-Type': 'multipart/form-data; boundary=Tw3ePy',
-            'Content-Length': len(body)
+            'Content-Length': str(len(body))
         }
 
         return headers, body

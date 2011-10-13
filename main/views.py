@@ -27,6 +27,7 @@ def save_bounds(request):
     bounds.max_y = maxy
     bounds.user = request.user
     bounds.save()
+    bounds.make_background()
     return HttpResponseRedirect(reverse('get_bounds', args=[bounds.uuid]))
 
 
@@ -34,7 +35,13 @@ def get_bounds(request, bounds_uuid):
     bounds = Bound.objects.get(uuid=bounds_uuid)
     return render_to_response('get_bounds.html',{'bounds':bounds},context_instance=RequestContext(request))
 
-def set_background(request):
+def set_background(request, bounds_uuid):
     if request.method == 'POST':
+        bound = Bound.objects.get(uuid=bounds_uuid)
+        bound.set_as_twitter_background()
+
+        if request.POST.has_key('twitt'):
+            bound.send_twitt()
+
         return HttpResponse('OK')
     return Http404

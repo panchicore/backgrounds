@@ -10,8 +10,13 @@
 
 {% block content %}
 
-    <form action="{% url set_background %}" method="post">
+    <form action="{% url set_background bounds.uuid %}" method="post">
         <input type="hidden" name="uuid" value="{{ bounds.uuid }}">
+
+        <input type="checkbox" name="twitt" id="twitt">
+        <label for="twitt">Twitt this? :D</label>
+
+        <br>
         <input type="submit" value="set me this background on my twitter page">
     </form>
 

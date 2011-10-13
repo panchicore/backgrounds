@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_extensions.db.fields import CreationDateTimeField, ModificationDateTimeField, UUIDField
 from utils import get_json, download_image
-import Image, os
+import Image, os, tweepy, base64
 from django.conf import settings
 
 class Bound(models.Model):
@@ -23,6 +23,9 @@ class Bound(models.Model):
 
     def __unicode__(self):
         return self.user.username
+
+    def get_image_absolute_path(self):
+        return os.path.join(settings.MEDIA_ROOT, self.image.name)
 
     """ get panoramio JSON for the images into the geo bounds """
     def get_panoramas(self):
@@ -47,7 +50,6 @@ class Bound(models.Model):
             download_image(url, self.id, name)
             image_list.append(name)
             print 'total: %i' % len(image_list)
-
 
         grid = 10
         sizex = 60
@@ -78,7 +80,6 @@ class Bound(models.Model):
             img = Image.open( os.path.join(downloads_path, image_list[i]) )
             blank_image.paste(img, (x,y))
 
-
         negro = Image.open( os.path.join(statics_path, 'negro.jpg') )
         blank_image.save( os.path.join(statics_path, 'backgrounds', '%i.jpg' % self.id) , quality=100)
         image = Image.blend(blank_image, negro, 0.5)
@@ -87,6 +88,23 @@ class Bound(models.Model):
         self.image = image.filename.split('static/').pop()
 
         self.save()
+
+    def get_twitter_api(self):
+        auth = tweepy.OAuthHandler(settings.TWITTER_CONSUMER_KEY, settings.TWITTER_CONSUMER_SECRET)
+        twitter_user = self.user.social_auth.get()
+        auth.set_access_token(twitter_user.oauth_token, twitter_user.oauth_token_secret)
+        api = tweepy.API(auth)
+        return api
+
+    def set_as_twitter_background(self):
+        api = self.get_twitter_api()
+        image = open(self.get_image_absolute_path())
+        image = base64.b64encode(image.read())
+        res = api.update_profile_background_image(self.get_image_absolute_path())
+        print res
+
+    def send_twitt(self):
+        pass
 
 
     

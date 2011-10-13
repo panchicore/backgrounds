@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     url(r'^save/$', 'main.views.save_bounds', name='save_bounds'),
     url(r'^get/(?P<bounds_uuid>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})/$', 'main.views.get_bounds', name='get_bounds'),
-    url(r'^set/$', 'main.views.set_background', name='set_background'),
+    url(r'^set/(?P<bounds_uuid>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})/$', 'main.views.set_background', name='set_background'),
     url(r'', include('social_auth.urls')),
     url(r'^$', 'main.views.map', name='map'),
 
